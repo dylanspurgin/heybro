@@ -1,0 +1,29 @@
+<ion-navbar *navbar>
+  <ion-title>login</ion-title>
+</ion-navbar>
+
+<ion-content padding class="login">
+    <form [ngFormModel]="authForm" (ngSubmit)="login(authForm.value)">
+        <ion-item [class.error]="!email.valid && email.touched">
+            <ion-label floating>Email</ion-label>
+            <ion-input type="text" value="" [ngFormControl]="email"></ion-input>
+        </ion-item>
+        <ion-item [class.error]="!password.valid && password.touched">
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" value="" [ngFormControl]="password" ></ion-input>
+        </ion-item>
+        <br/>
+        <div *ngIf="error" class="error">
+          {{error}}
+        </div>
+        <br>
+        <button type="submit" class="custom-button" [disabled]="!authForm.valid" block>Login</button>
+        <br>
+        <div class="u-text-center">
+            <a (click)="gotoSignup()" class="">Sign Up</a>
+        </div>
+        <br>
+        <div *ngIf="auth | async">You are logged in</div>
+        <div *ngIf="!(auth | async)">Please log in</div>
+    </form>
+</ion-content>
