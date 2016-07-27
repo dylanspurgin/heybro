@@ -1,14 +1,34 @@
 import {Page, NavController} from 'ionic-angular';
+import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { FormBuilder,  ControlGroup, Control, Validators, AbstractControl } from '@angular/common';
 
-/*
-  Generated class for the MyGirlPage page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
   templateUrl: 'build/pages/my-girl/my-girl.html',
 })
 export class MyGirlPage {
-  constructor(public nav: NavController) {}
+
+    user: FirebaseObjectObservable<any>;
+
+    myGirlForm: ControlGroup;
+    cDate: AbstractControl;
+    error: Object;
+
+    constructor(public nav: NavController,
+                public af: AngularFire,
+                fb: FormBuilder) {
+
+        this.myGirlForm = fb.group({
+            'cDate': ['', Validators.compose([Validators.required])]
+        });
+        this.cDate = this.myGirlForm.controls['cDate'];
+
+        this.user = af.database.object('/user');
+        this.af = af;
+    }
+
+    updateMyGirl(formValue: any) {
+        this.user.update({cDate: formValue.cDate});
+    }
+
 }

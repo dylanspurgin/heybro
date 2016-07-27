@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "59494386062",
+    "firebase_url": "https://hey-bro.firebaseio.com",
+    "project_id": "hey-bro",
+    "storage_bucket": "hey-bro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59494386062:android:dcbd6601d4de3b62",
+        "android_client_info": {
+          "package_name": "heybro.spurgin.net"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59494386062-51v356j6jcpnsbmln82fm4kfupbuqr01.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "heybro.spurgin.net",
+            "certificate_hash": "D8E6D639F55D2123B934BF6B83CB0568C6AB1B2B"
+          }
+        },
+        {
+          "client_id": "59494386062-l0dq2de9d41d6k1jk6p11aeagcp9lcq2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD04anDeXIC6UHMNczjzIeriCv7rympBPY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

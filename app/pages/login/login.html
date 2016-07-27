@@ -14,7 +14,7 @@
         </ion-item>
         <br/>
         <div *ngIf="error" class="error">
-          {{error}}
+          {{error.message}}
         </div>
         <br>
         <button type="submit" class="custom-button" [disabled]="!authForm.valid" block>Login</button>

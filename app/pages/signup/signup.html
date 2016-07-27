@@ -11,9 +11,9 @@
 <ion-content padding class="signup">
     <h1 class="u-text-center">Hey Bro!</h1>
     <form [ngFormModel]="signupForm" (ngSubmit)="signup(signupForm.value)">
-        <ion-item [class.error]="!name.valid && name.touched">
+        <ion-item [class.error]="!displayName.valid && displayName.touched">
             <ion-label floating>Name</ion-label>
-            <ion-input type="text" value="" [ngFormControl]="name"></ion-input>
+            <ion-input type="text" value="" [ngFormControl]="displayName"></ion-input>
         </ion-item>
         <ion-item [class.error]="!email.valid && email.touched">
             <ion-label floating>Email</ion-label>

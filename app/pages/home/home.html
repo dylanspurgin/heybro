@@ -16,7 +16,7 @@
         <ion-card>
             <ion-item>
                 <ion-icon name="calendar" item-left></ion-icon>
-                <h3>Hey, Bro!</h3>
+                <h3>Hey, {{(user | async)?.displayName}}!</h3>
                 <h4>Seven days until shit gets real!</h4>
             </ion-item>
         </ion-card>
