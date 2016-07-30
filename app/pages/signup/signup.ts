@@ -69,13 +69,16 @@ export class SignupPage {
             method: AuthMethods.Password
         }).then((authData) => {
             console.log(authData)
-
-            const itemObservable = this.af.database.object('/user');
-            itemObservable.set({ displayName: credentials.displayName});
-
-
+            const user = this.af.database.object('/users/'+authData.uid);
+            var names = credentials.displayName.split(' ');
+            user.set({
+                first_name: names[0],
+                last_name: names[1] || '',
+                email: credentials.email,
+                uid: authData.uid,
+                auth_provider: authData.provider
+            });
         }).then((value) => {
-            // todo -goto signup2
             this.nav.setRoot(HomePage);
         }).catch((error) => {
             this.error = error

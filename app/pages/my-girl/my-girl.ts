@@ -8,27 +8,42 @@ import { FormBuilder,  ControlGroup, Control, Validators, AbstractControl } from
 })
 export class MyGirlPage {
 
-    user: FirebaseObjectObservable<any>;
-
+    user: any;
+    userRef: FirebaseObjectObservable<any>;
     myGirlForm: ControlGroup;
-    cDate: AbstractControl;
+    cycleDate: AbstractControl;
+    cycleNotificationDaysBefore: AbstractControl;
     error: Object;
 
     constructor(public nav: NavController,
                 public af: AngularFire,
                 fb: FormBuilder) {
 
-        this.myGirlForm = fb.group({
-            'cDate': ['', Validators.compose([Validators.required])]
-        });
-        this.cDate = this.myGirlForm.controls['cDate'];
+        let self = this;
 
-        this.user = af.database.object('/user');
-        this.af = af;
+        this.myGirlForm = fb.group({
+            'cycleDate': ['', Validators.compose([Validators.required])],
+            'cycleNotificationDaysBefore': ['', Validators.compose([Validators.required])]
+        });
+        this.cycleDate = this.myGirlForm.controls['cycleDate'];
+        this.cycleNotificationDaysBefore = this.myGirlForm.controls['cycleNotificationDaysBefore'];
+
+
+        af.auth.subscribe(function (auth) {
+            if (auth) {
+                self.userRef = af.database.object('/users/'+auth.uid);
+                self.userRef.subscribe(function(snapshot) {
+                    self.user = snapshot;
+                });
+            }
+        });
     }
 
     updateMyGirl(formValue: any) {
-        this.user.update({cDate: formValue.cDate});
+        this.userRef.update({
+            cycleDate: formValue.cycleDate,
+            cycleNotificationDaysBefore: formValue.cycleNotificationDaysBefore
+        });
     }
 
 }

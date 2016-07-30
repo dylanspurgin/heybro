@@ -2,17 +2,38 @@ import { Alert, NavController} from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
+declare var window: any;
+
 @Injectable()
 export class PushNotificationService {
 
     FCMPlugin: any;
 
-    constructor(public af: AngularFire, public nav: NavController) {
+    constructor(public af: AngularFire) {
         this.FCMPlugin = window.FCMPlugin;
-        this.listenForPush();
     }
 
-    listenForPush () {
+    registerToken(uid) {
+        let self = this;
+        if (!this.FCMPlugin) {
+            console.debug('Firebase Cloud Messaging plugin not found when attempting to register token.');
+            return;
+        }
+        this.FCMPlugin.getToken(
+            function(token) {
+                let user = self.af.database.object('/users/'+uid);
+                user.update({push_token: token});
+            },
+            function(err){
+                console.error('error retrieving token: ' + err);
+            }
+        );
+    }
+
+    listenForPush (callback) {
+        if (!this.FCMPlugin) {
+            return;
+        }
         // Subscribe to Push Notification
         this.FCMPlugin.onNotification(
             function(data){
@@ -21,7 +42,7 @@ export class PushNotificationService {
                     // TODO - goto Page referenced in Push data
                 } else {
                     // Notification was received in foreground.
-                    this.doAlert(data.title, data.message);
+                    callback(data);
                 }
             },
             function(msg){
@@ -31,27 +52,6 @@ export class PushNotificationService {
                 console.debug('Error registering onNotification callback: ' + err);
             }
         );
-    }
-
-    registerToken() {
-        this.FCMPlugin.getToken(
-            function(token) {
-                let user = this.af.database.object('/user');
-                user.update({push_token: token});
-            },
-            function(err){
-                console.log('error retrieving token: ' + err);
-            }
-        );
-    }
-
-    doAlert(title: string, message: string) {
-        let alert = Alert.create({
-            title: title,
-            subTitle: message,
-            buttons: ['OK']
-        });
-        this.nav.present(alert);
     }
 
 }

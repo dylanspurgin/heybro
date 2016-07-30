@@ -22,8 +22,5 @@
         <div class="u-text-center">
             <a (click)="gotoSignup()" class="">Sign Up</a>
         </div>
-        <br>
-        <div *ngIf="auth | async">You are logged in</div>
-        <div *ngIf="!(auth | async)">Please log in</div>
     </form>
 </ion-content>

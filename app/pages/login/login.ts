@@ -15,12 +15,12 @@ export class LoginPage {
     email: AbstractControl;
     password: AbstractControl;
     error: Object;
-    nav: NavController;
-    user: FirebaseObjectObservable<any>;
 
     constructor(public af: AngularFire,
                 fb: FormBuilder,
-                nav: NavController) {
+                public nav: NavController) {
+
+        let self = this;
 
         this.authForm = fb.group({
             'email': ['', Validators.compose([Validators.required])],
@@ -29,24 +29,16 @@ export class LoginPage {
 
         this.email = this.authForm.controls['email'];
         this.password = this.authForm.controls['password'];
-        this.nav  = nav;
-        this.user = af.database.object('/user');
-
-
 
         this.af.auth.subscribe(function (auth) {
-            console.debug('auth',auth);
             if (auth) {
-                // I think this means we're logged in
-                this.nav.setRoot(HomePage);
+                self.nav.setRoot(HomePage);
             }
         });
     }
 
     login(value: any) {
         let error = this.error = null;
-        let af = this.af;
-        let token = this.token;
         let nav =  this.nav;
         this.af.auth.login(value)
             .then(function (response) {
@@ -57,6 +49,10 @@ export class LoginPage {
                 console.debug('Auth error', response);
                 error = response;
             });
+    }
+
+    gotoSignup() {
+        this.nav.setRoot(SignupPage);
     }
 
 }

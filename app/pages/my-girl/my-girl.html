@@ -1,19 +1,23 @@
-<!--
-  Generated template for the MyGirlPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-navbar *navbar>
-  <ion-title>my-girl</ion-title>
-</ion-navbar>
+<ion-header>
+    <ion-navbar>
+        <button menuToggle>
+            <ion-icon name='menu'></ion-icon>
+        </button>
+        <ion-title>Edit My Girl</ion-title>
+    </ion-navbar>
+</ion-header>
 
 <ion-content padding class="my-girl">
-    <ion-item *ngIf="(user | async)?.cDate">Cycle date: {{(user | async)?.cDate}}<br/></ion-item>
+    <ion-item *ngIf="(user)?.cycleDate">Cycle date: {{(user)?.cycleDate}}<br/></ion-item>
     <form [ngFormModel]="myGirlForm" (ngSubmit)="updateMyGirl(myGirlForm.value)">
-        <ion-item [class.error]="!cDate.valid && cDate.touched">
+        <ion-item [class.error]="!cycleDate.valid && cycleDate.touched">
             <ion-label floating>Update cycle date:</ion-label>
-            <ion-input type="date" value="" [ngFormControl]="cDate"></ion-input>
+            <ion-input type="date" [ngModel]="(user)?.cycleDate" [ngFormControl]="cycleDate"></ion-input>
+        </ion-item>
+        <br/>
+        <ion-item [class.error]="!cycleNotificationDaysBefore.valid && cycleNotificationDaysBefore.touched">
+            <ion-label floating>Days before cycle to send notification:</ion-label>
+            <ion-input type="number" [ngModel]="(user)?.cycleNotificationDaysBefore" [ngFormControl]="cycleNotificationDaysBefore"></ion-input>
         </ion-item>
         <br/>
         <div *ngIf="error" class="error">

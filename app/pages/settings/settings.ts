@@ -1,14 +1,17 @@
 import {Page, NavController} from 'ionic-angular';
+import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { SignupPage } from '../signup/signup';
 
-/*
-  Generated class for the SettingsPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
   templateUrl: 'build/pages/settings/settings.html',
 })
 export class SettingsPage {
-  constructor(public nav: NavController) {}
+  constructor(public nav: NavController,
+              public af: AngularFire) {}
+
+  logout () {
+      this.af.auth.logout();
+      this.nav.setRoot(SignupPage);
+  }
+
 }
